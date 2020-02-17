@@ -5,6 +5,11 @@ import java.sql.Timestamp;
 
 public abstract class BaseDto implements Serializable, DropdownList, Comparable<BaseDto>{
 	
+	/**
+	 * UID for serilization
+	 */
+	private static final long serialVersionUID = -6798048176901643521L;
+
 	protected long id;
 	
 	protected String createdBy;
