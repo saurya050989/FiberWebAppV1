@@ -8,6 +8,10 @@ public class RoleDto extends BaseDto {
 	public static final String NO = "N";
 	public static final String ACTIVE = "active";
 	public static final String INACTIVATE = "Inactive";
+	public static final int ADMIN=1;
+	public static final int STUDENT=2;
+	
+	
 
 	private String name;
 

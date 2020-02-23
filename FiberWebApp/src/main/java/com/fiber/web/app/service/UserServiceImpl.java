@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fiber.web.app.common.FiberRestResponse;
 import com.fiber.web.app.common.UserContext;
 import com.fiber.web.app.dao.UserDaoInt;
 import com.fiber.web.app.dto.UserDto;
+import com.fiber.web.app.exception.DuplicateRecordException;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserServiceInt {
@@ -21,7 +23,17 @@ public class UserServiceImpl implements UserServiceInt {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public long addUser(UserDto dto, UserContext context) {
-		return userDaoInt.add(dto, context);
+		FiberRestResponse res=new FiberRestResponse();
+		UserDto exixtDto=userDaoInt.findByLogin(dto.getLoginId(), context);
+		if(exixtDto!=null) {
+		res.setSuccess(false);
+		res.addMessage("Login ID already exist");
+		
+		}
+		else {
+			return userDaoInt.add(dto, context);
+	}
+		return 0;
 	}
 
 	@Override
